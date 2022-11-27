@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require("../models/user");
 const crypto = require("crypto");
 const { validationResult } = require("express-validator");
@@ -25,12 +26,11 @@ exports.signup = async (req, res) => {
     const user = await User.findOne({ email });
     if (user) return res.status(403).json({ error: "User already exist" });
 
-    const data = {
+    const newUser = await User.create({
       name,
       email,
       password: hashPwd(password),
-    };
-    const newUser = await User.create(data);
+    })
 
     if (!newUser)
       return res.status(500).json({ error: "Something went wrong" });
