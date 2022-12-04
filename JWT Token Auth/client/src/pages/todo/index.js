@@ -17,8 +17,8 @@ import { GrAdd } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TodoContext } from "../../context/todo";
-import { isAuthenticate } from "../../apiHelper/auth";
-import { createTodo } from "../../apiHelper/todo";
+import { isAuthenticate } from "../apiHelper/auth";
+import { createTodo } from "../apiHelper/todo";
 
 const Todo = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,7 +30,7 @@ const Todo = () => {
     error: false,
     success: false,
   });
-  const { todo, loading } = values;
+  const { todo } = values;
   const handleChange = (name) => (e) => {
     setValues({
       ...values,
@@ -63,7 +63,7 @@ const Todo = () => {
           autoClose: 2000,
         });
         setTimeout(() => {
-          navigate(`/user/todo/tasks/${response?.newTodo?._id}`);
+          navigate("/");
         }, 2000);
       }
     });
@@ -106,9 +106,8 @@ const Todo = () => {
             <Button
               colorScheme="orange"
               mr={3}
-              disabled={todo.length === 0 || loading}
+              disabled={todo.length === 0}
               onClick={handleClick}
-              isLoading={loading}
             >
               Save
             </Button>
